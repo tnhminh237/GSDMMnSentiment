@@ -54,6 +54,20 @@ Silver của bạn có các cột:
 
 Bốn cột bắt buộc là `comment_id`, `video_id`, `text`, `tokens`. Các cột còn lại được giữ nếu có. Dùng Parquet Silver để train, không dùng CSV `peek_comments_clean.csv`.
 
+### Nếu bắt đầu từ file 73.247 dòng đã bỏ `source`
+
+Bỏ qua phần này nếu đã có Silver. Với `datasets/comments_without_source.parquet` (17 cột), dùng `jobs/clean_comments.py` để tạo Silver trước khi chạy GSDMM. Script không đọc `source`, không tạo `is_synth`; giữ nguyên các quy tắc lọc của file clean đã dùng trước đó.
+
+Tại `gsdmm_sentiment/`, chép dữ liệu vào đường dẫn script đọc rồi chạy trong Spark:
+
+```powershell
+New-Item -ItemType Directory -Force .\data\raw | Out-Null
+Copy-Item ..\datasets\comments_without_source.parquet .\data\raw\comments_without_source.parquet
+docker run --rm --user 0 -v "${PWD}/jobs:/opt/jobs:ro" -v "${PWD}/data:/opt/data" apache/spark:4.1.3-scala2.13-java17-python3-r-ubuntu /opt/spark/bin/spark-submit --master "local[2]" /opt/jobs/clean_comments.py
+```
+
+Docker cần Internet để tải image Spark nếu chưa có. Kết quả chính là một file `part-*.parquet` trong `data/silver/comments_clean/`, có đúng 7 cột: `comment_id`, `video_id`, `author`, `text`, `likes`, `published`, `tokens`. Các dòng bị loại theo quy tắc lạc đề được lưu riêng trong `data/gold/comments_removed_offtopic/` như script cũ. Script giữ chế độ `overwrite` của bản bạn gửi: chạy lại sẽ thay kết quả clean và bảng dòng lạc đề tại hai thư mục này.
+
 ## 3. Build Docker image
 
 Đứng tại thư mục `GSDMMnSentiment\gsdmm_sentiment`:
@@ -235,6 +249,7 @@ docker run --rm --user 0 -v "${PWD}/jobs:/opt/jobs:ro" -v "${PWD}/data:/opt/data
 │   ├── gsdmm_train.py
 │   ├── assign_aspects.py
 │   ├── predict_sentiment.py
+│   ├── clean_comments.py          # Tùy chọn: tạo Silver từ file 17 cột
 │   ├── Dockerfile.gsdmm
 │   └── Dockerfile.sentiment
 ├── config/

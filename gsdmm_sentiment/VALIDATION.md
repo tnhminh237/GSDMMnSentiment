@@ -8,3 +8,15 @@
 - Hai Dockerfile đã được đưa vào build thật. Môi trường kiểm tra tải được base image, nhưng container build không phân giải được tên miền kho thư viện (`Temporary failure in name resolution`), nên chưa hoàn tất cài dependency hoặc chạy suy luận VisoBERT trong Docker tại đây.
 
 Các test có predictor giả chỉ xác minh xử lý dữ liệu và đầu ra, không kiểm chứng độ chính xác sentiment. Trên máy sử dụng, chạy thử 100 dòng theo README trước khi chạy toàn bộ. Không có kết quả accuracy hoặc F1 độc lập cho bộ bình luận này.
+
+## Kiểm tra clean khi đầu vào không còn source
+
+Đã chạy `jobs/clean_comments.py` bằng Spark 4.1.3 trong môi trường kiểm tra, trên toàn bộ bản 17 cột `comments_without_source.parquet`. Chỉ đổi đường dẫn sang thư mục thử riêng và dùng Spark local 2 luồng, 4 shuffle partitions; các biểu thức lọc của script được giữ nguyên.
+
+- Đọc 73.247 dòng; sau bỏ reply, null text/tokens và trùng ID còn 62.868.
+- Sau lọc ngôn ngữ/toán/độ dài còn 42.724; sau bỏ trùng văn bản dài còn 41.589.
+- Loại 888 dòng theo quy tắc lạc đề, còn **40.701 dòng**.
+- Silver có đúng 7 cột và **một file `part-*.parquet`**. Không có `source` hoặc `is_synth`.
+- Đã đối chiếu nội dung, tokens, video và tác giả của các dòng giữ lại với đầu vào; file đầu vào không thay đổi. Bảng audit lạc đề có 888 dòng.
+
+Đây là kiểm tra Spark thực tế trên môi trường phát triển, không phải xác nhận đã chạy image Spark Docker được nêu trong README.
