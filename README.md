@@ -283,6 +283,6 @@ Kết quả kiểm tra và giới hạn của lần đóng gói được ghi t�
 
 ## Dữ liệu và diễn giải kết quả
 
-Dữ liệu, CSV bình luận, file model và cache không được đưa lên GitHub bởi `.gitignore`. Nếu dùng tập đã trộn dữ liệu thật và giả lập từ công việc trước, phải mô tả việc trộn đó trong báo cáo; tỷ lệ sentiment không đại diện tự động cho người dùng YouTube thực tế. Repo không thêm bước tách nguồn hoặc tạo thêm dữ liệu giả.
+Thư mục `data/` của bộ chạy mới được bỏ qua bởi `.gitignore`, nên bình luận, model và cache tạo ở đây không được commit. Các file bạn đã tải lên trong `test/` được giữ nguyên; `.gitignore` không loại các file đã được Git theo dõi. Nếu dùng tập đã trộn dữ liệu thật và giả lập từ công việc trước, phải mô tả việc trộn đó trong báo cáo; tỷ lệ sentiment không đại diện tự động cho người dùng YouTube thực tế. Bộ chạy này không thêm bước tách nguồn hoặc tạo thêm dữ liệu giả.
 
 Giữ nguyên ba tên file bạn đang chạy. Thay đổi khi đóng gói: bảng tên cụm được đưa ra JSON có kiểm tra cùng lần train; GSDMM chặn ghi đè; Dockerfile sửa lỗi dependency; đếm độ dài sentiment không phát cảnh báo gây nhầm lẫn, vẫn giữ cờ cắt văn bản.
