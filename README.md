@@ -264,6 +264,8 @@ docker compose config --quiet
 
 Không cần làm phần này nếu chỉ chạy pipeline qua Docker.
 
+Kết quả kiểm tra và giới hạn của lần đóng gói được ghi tại [VALIDATION.md](VALIDATION.md).
+
 ## Lỗi thường gặp
 
 | Hiện tượng | Cách xử lý |
