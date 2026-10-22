@@ -4,6 +4,7 @@
 .pytest_cache
 **/__pycache__
 data
+test
 tests
 *.zip
 *.log

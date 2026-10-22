@@ -14,13 +14,15 @@ data/silver/comments_clean/*.parquet
 
 Repo bắt đầu từ Silver đã làm sạch; không thu thập lại YouTube và không sửa `curate.py` hay Parquet gốc. Repo public chứa code và bảng tên cụm; bạn tự chép dữ liệu vào máy chạy.
 
+Repo đích đã có thư mục `test/` với code và dữ liệu bạn tải lên trước đó; phần đó được giữ nguyên. Bộ chạy được hướng dẫn trong README này nằm ở **thư mục gốc repo**, dùng `jobs/`, `config/`, `data/` và `compose.yaml` cùng cấp với README. Chạy lệnh tại thư mục `GSDMMnSentiment`, không chạy bên trong `test/`. Dữ liệu và code trong `test/` không được đưa vào Docker build context của bộ chạy mới.
+
 ## 1. Chuẩn bị trên Windows
 
 Cài Git và Docker Desktop, mở Docker Desktop và dùng Linux containers. Mở **PowerShell**, chạy từng lệnh dưới đây. Không chép phần dấu nhắc `PS ...>` hoặc `>>` vào lệnh.
 
 ```powershell
-git clone https://github.com/tnhminh237/Big-Data-YTB-GSDMM-Sentiment.git
-cd .\Big-Data-YTB-GSDMM-Sentiment
+git clone https://github.com/tnhminh237/GSDMMnSentiment.git
+cd .\GSDMMnSentiment
 docker version
 docker compose version
 ```
