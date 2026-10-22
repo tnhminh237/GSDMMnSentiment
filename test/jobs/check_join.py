@@ -1,0 +1,10 @@
+import pandas as pd
+raw = pd.read_parquet("/opt/data/raw/other.parquet")
+v = pd.read_csv("/opt/data/gold/video_ai_final.csv")
+print("Cột:", list(v.columns))
+print(v["ai_final"].value_counts(dropna=False))
+print("video_id kiểu:", v["video_id"].dtype, raw["video_id"].dtype)
+print("video_id của other có trong csv:", raw["video_id"].drop_duplicates().isin(v["video_id"]).sum(), "/", raw["video_id"].nunique())
+vc = raw["video_id"].value_counts()
+print("Bình luận/video:", vc.describe())
+print(raw.groupby("is_modelable")["n_tokens"].describe())
