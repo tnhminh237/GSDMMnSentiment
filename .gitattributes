@@ -6,3 +6,6 @@
 *.json text eol=lf
 *.csv text eol=lf
 Dockerfile* text eol=lf
+
+# Giữ nguyên định dạng các file của dự án đã tải lên trước đó.
+test/** -text -eol
